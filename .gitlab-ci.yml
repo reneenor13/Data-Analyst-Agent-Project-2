@@ -1,16 +1,46 @@
-import pandas as pd
-import os
+stages:
+  - test
+  - deploy
 
-def load_data_from_files(file_paths):
-    for fname, path in file_paths.items():
-        if fname.endswith(".csv"):
-            return pd.read_csv(path)
-        elif fname.endswith(".parquet"):
-            return pd.read_parquet(path)
-    return pd.DataFrame()
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
-def scrape_wikipedia():
-    import requests
-    import pandas as pd
-    tables = pd.read_html("https://en.wikipedia.org/wiki/List_of_highest-grossing_films")
-    return tables[0]
+cache:
+  paths:
+    - .cache/pip/
+
+test:
+  stage: test
+  image: python:3.11
+  before_script:
+    - pip install -r requirements.txt
+    - pip install pytest pytest-flask
+  script:
+    - python -m pytest tests/ -v --tb=short
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+  only:
+    - main
+    - merge_requests
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "Triggering Render deployment"
+    - |
+      if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+        curl -X POST "$RENDER_DEPLOY_HOOK"
+        echo "Deployment triggered successfully"
+      else
+        echo "No deployment hook configured"
+      fi
+  only:
+    - main
+  when: manual
