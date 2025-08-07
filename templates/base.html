@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Data Analyst Agent{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+    
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="AI-powered data analysis using Gemini AI. Upload data, ask questions, get insights.">
+    <meta name="keywords" content="data analysis, AI, machine learning, visualization, Gemini AI">
+    <meta name="author" content="Renee Noronha">
+    
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="Data Analyst Agent - AI-Powered Analytics">
+    <meta property="og:description" content="Transform your data into insights with intelligent AI analysis">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://data-analyst-agent.render.com">
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-h-screen{% endblock %}">
+    <!-- Navigation -->
+    <nav class="bg-white/10 backdrop-blur-lg border-b border-white/20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{{ url_for('home') }}" class="flex items-center">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" 
+                             alt="Logo" class="h-8 w-8 mr-3">
+                        <span class="text-white text-xl font-bold">Data Analyst Agent</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="{{ url_for('home') }}" 
+                       class="nav-link text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Home
+                    </a>
+                    <a href="{{ url_for('docs') }}" 
+                       class="nav-link text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        API Docs
+                    </a>
+                    <a href="https://gitlab.com/reneenor13/data-analyst-agent" 
+                       class="nav-link text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fab fa-gitlab mr-2"></i>GitLab
+                    </a>
+                    <div id="api-status" class="w-3 h-3 bg-gray-400 rounded-full animate-pulse" 
+                         title="Checking API status..."></div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="{{ url_for('home') }}" class="block text-white/80 hover:text-white px-3 py-2 text-sm">Home</a>
+                <a href="{{ url_for('docs') }}" class="block text-white/80 hover:text-white px-3 py-2 text-sm">API Docs</a>
+                <a href="https://gitlab.com/reneenor13/data-analyst-agent" class="block text-white/80 hover:text-white px-3 py-2 text-sm">
+                    <i class="fab fa-gitlab mr-2"></i>GitLab
+                </a>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/20 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Data Analyst Agent</h3>
+                    <p class="text-white/60">AI-powered data analysis using Google Gemini for intelligent insights.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-md font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('docs') }}" class="text-white/60 hover:text-white transition-colors">API Documentation</a></li>
+                        <li><a href="/health" class="text-white/60 hover:text-white transition-colors">Health Check</a></li>
+                        <li><a href="/api/status" class="text-white/60 hover:text-white transition-colors">API Status</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-md font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://gitlab.com/reneenor13/data-analyst-agent" 
+                           class="text-white/60 hover:text-white transition-colors">
+                            <i class="fab fa-gitlab text-xl"></i>
+                        </a>
+                        <a href="mailto:reneenoronha2006@gmail.com" 
+                           class="text-white/60 hover:text-white transition-colors">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-white/20 my-8">
+            
+            <div class="text-center">
+                <p class="text-white/60">
+                    &copy; 2025 Data Analyst Agent by Renee Noronha. Built with ❤️ using Gemini AI.
+                </p>
+                <p class="text-white/40 text-sm mt-2">
+                    Licensed under MIT License
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Mobile menu toggle -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
