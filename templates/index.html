@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Agent - AI-Powered Analytics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/10 backdrop-blur-lg border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-chart-line text-2xl text-white mr-3"></i>
+                    <span class="text-white text-xl font-bold">Data Analyst Agent</span>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/docs" class="text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        API Docs
+                    </a>
+                    <a href="https://github.com/yourusername/data-analyst-agent" class="text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fab fa-github mr-2"></i>GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 mb-8">
+                    AI-Powered Data Analysis
+                </h1>
+                <p class="text-xl text-white/80 mb-12 max-w-3xl mx-auto">
+                    Transform your data into insights with our intelligent agent. Upload files, ask questions, 
+                    and get comprehensive analysis with beautiful visualizations.
+                </p>
+                
+                <!-- API Demo -->
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 max-w-4xl mx-auto mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6">Try the API</h2>
+                    <div class="bg-gray-900 rounded-lg p-6 text-left">
+                        <div class="text-green-400 text-sm mb-2">$ curl example</div>
+                        <code class="text-white text-sm">
+curl "https://your-app.render.com/api/" \<br>
+&nbsp;&nbsp;-F "questions.txt=@questions.txt" \<br>
+&nbsp;&nbsp;-F "data.csv=@data.csv"
+                        </code>
+                    </div>
+                    <div id="demo-result" class="mt-6 p-4 bg-green-900/30 rounded-lg hidden">
+                        <div class="text-green-400 text-sm">Response:</div>
+                        <pre class="text-white text-sm mt-2" id="demo-output"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated background -->
+        <div class="absolute inset-0 -z-10">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-800/20 to-cyan-800/20 animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center">
+                    <i class="fas fa-brain text-4xl text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-4">AI-Powered Analysis</h3>
+                    <p class="text-white/70">Leverage Gemini AI for intelligent data interpretation and insights.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center">
+                    <i class="fas fa-chart-bar text-4xl text-purple-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-4">Beautiful Visualizations</h3>
+                    <p class="text-white/70">Generate stunning charts and plots automatically from your data.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 text-center">
+                    <i class="fas fa-lightning-bolt text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-4">Lightning Fast</h3>
+                    <p class="text-white/70">Get results in under 3 minutes with our optimized processing pipeline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black/20 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-white/60">&copy; 2025 Data Analyst Agent. Built with ❤️ using Gemini AI.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
