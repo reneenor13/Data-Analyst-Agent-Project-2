@@ -1,32 +1,37 @@
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import JSONResponse
-from typing import List, Optional
-import tempfile
-import shutil
-from model import handle_query
+FROM python:3.11-slim
 
-app = FastAPI()
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
-@app.post("/api/")
-async def analyze_data(
-    questions: UploadFile = File(...),
-    files: Optional[List[UploadFile]] = File(None)
-):
-    temp_dir = tempfile.mkdtemp()
+# Set work directory
+WORKDIR /app
 
-    # Save files locally
-    file_paths = {}
-    for f in files or []:
-        temp_path = f"{temp_dir}/{f.filename}"
-        with open(temp_path, "wb") as buffer:
-            shutil.copyfileobj(f.file, buffer)
-        file_paths[f.filename] = temp_path
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-    # Save questions.txt
-    question_path = f"{temp_dir}/questions.txt"
-    with open(question_path, "wb") as qf:
-        shutil.copyfileobj(questions.file, qf)
+# Copy requirements first for better caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-    # Run processing
-    result = handle_query(question_path, file_paths)
-    return JSONResponse(content=result)
+# Copy application code
+COPY . .
+
+# Create non-root user
+RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
+USER appuser
+
+# Expose port
+EXPOSE $PORT
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:$PORT/health || exit 1
+
+# Start the application
+CMD gunicorn --bind 0.0.0.0:$PORT app:app --timeout 300 --workers 2 --worker-class sync
